@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "node",
+		"outDir": "build",
+		"esModuleInterop": true,
+		"noImplicitAny": true,
+		"sourceMap": true,
+		"inlineSources": true,
+		"strict": true,
+		"incremental": true,
+		"experimentalDecorators": true,
+		"strictPropertyInitialization": false
+	},
+}

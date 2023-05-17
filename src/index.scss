@@ -1,0 +1,54 @@
+/**
+ * EN: Settings – used with preprocessors and contain font, colors definitions, etc.
+ * RU: Настройки – препроцессорные переменные и методы (без CSS вывода)
+ */
+:root {
+	--color-primary-900: #00B9D2;
+	--color-primary-800: #50959Ecc;
+	--color-primary-700: #50959Eb2;
+	//--color-primary-900: red;
+	//--color-primary-800: red;
+	//--color-primary-700: red;
+
+	--color-black-900: #000000B2;
+	--color-black-800: #00000080;
+	--color-black-700: #0000009E;
+
+	--color-ice-sclera: #ffffff;
+	--color-ice-pupil: #6796CD;
+	--color-ice-iris: #000000;
+
+	--color-bright-900: #ffffff40;
+
+	--border-main: 1;
+	--border-buttons: 3;
+}
+
+/**
+ * EN: Tools – globally used mixins and functions. It’s important not to output any CSS in the first 2 layers.
+ * RU: Инструменты – миксины и функции (без CSS вывода)
+ */
+// ...
+
+/**
+ * EN: Generic – reset and/or normalize styles, box-sizing definition, etc.
+ * RU: Generic – сброс и/или нормализация стилей
+ */
+[hidden] {
+	display: none !important;
+}
+
+/**
+ * EN: Elements – styling for bare HTML elements (like H1, A, etc.).
+ * RU: Элементы - единственные селекторы элемента HTML без классов
+ */
+body {
+	margin: 0;
+}
+
+html {
+	text-size-adjust: 100%;
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif;
+	overflow-x: hidden;
+	font-size: 10px;
+}

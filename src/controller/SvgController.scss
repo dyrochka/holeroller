@@ -1,0 +1,84 @@
+@mixin SvgGamepad {
+	width: 95vw;
+	height: 95vh;
+
+	> svg {
+		> .background {
+			fill: var(--color-black-700);
+		}
+
+		> .outlines {
+			stroke: var(--color-primary-800);
+			stroke-width: var(--border-main);
+			stroke-miterlimit: 10;
+			stroke-linecap: round;
+		}
+
+		.pressed {
+			fill: var(--color-primary-800);
+			stroke: var(--color-primary-800);
+		}
+
+		> .buttons {
+			fill: var(--color-black-700);
+			stroke: var(--color-primary-800);
+			stroke-width: var(--border-buttons);
+			stroke-miterlimit: 10;
+			stroke-linecap: round;
+
+			path, rect {
+				transition: 160ms ease-in-out;
+				transition-property: fill, stroke;
+			}
+
+			.ps {
+				stroke-width: 1;
+			}
+
+			> .lxy > circle {
+				cx: var(--left-x);
+				cy: var(--left-y);
+
+				&:last-child {
+					r: var(--left-size);
+				}
+			}
+
+			> .rxy > circle {
+				cx: var(--right-x);
+				cy: var(--right-y);
+
+				&:last-child {
+					r: var(--right-size);
+				}
+			}
+
+			> .lxy,
+			> .rxy {
+				> circle {
+					transition: 50ms ease-in-out;
+					transition-property: cx, cy, r;
+				}
+
+				> .sclera {
+					stroke-width: 0;
+					fill: var(--color-ice-sclera);
+				}
+				> .pupil {
+					stroke-width: 0;
+					fill: var(--color-ice-pupil);
+				}
+
+				> .iris {
+					stroke-width: 0;
+					fill: var(--color-ice-iris);
+				}
+			}
+
+			.l3,
+			.r3 {
+				fill: var(--color-bright-900);
+			}
+		}
+	}
+}

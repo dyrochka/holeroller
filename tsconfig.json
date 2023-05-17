@@ -1,0 +1,16 @@
+{
+	"extends": "./tsconfig.base.json",
+	"compilerOptions": {
+		"rootDir": "src/",
+		"baseUrl": "src/",
+		"incremental": true,
+		"tsBuildInfoFile": "./.tsconfig.tsbuildinfo"
+	},
+	"include": [
+		"src",
+		"src/global.d.ts"
+	],
+	"exclude": [
+		"src/monitor"
+	]
+}
