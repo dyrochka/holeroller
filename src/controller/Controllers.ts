@@ -1,10 +1,14 @@
 import {CustomController} from 'controller/CustomController';
 import {ControllerType, detectControllerType} from 'controller/detectControllerType';
 import './Controllers.scss';
+import {getControllerTypeByStyle} from 'controller/getControllerTypeByStyle';
 
 export class Controllers {
 	private static instance: Controllers;
-	private types: Map<new () => any, {type: ControllerType}> = new Map();
+	private types: Set<{
+		Class: new (index: number, type: ControllerType) => CustomController,
+		type: ControllerType,
+	}> = new Set();
 	private cache: Map<string, {
 		gamepadId: string,
 		el: CustomController,
@@ -21,12 +25,16 @@ export class Controllers {
 
 	private constructor() { /* singleton, use Gamepads.getInstance() */ }
 
-	defineGamepad(target: new () => CustomController, settings: {type: ControllerType}) {
-		this.types.set(target, settings);
+	defineGamepad(Class: new () => CustomController, settings: {type: ControllerType}) {
+		this.types.add({
+			Class,
+			...settings
+		});
 	}
 
 	add(gamepad: Gamepad) {
-		if (this.cache.has(gamepad.id)) {
+		const id = gamepad.id + gamepad.index;
+		if (this.cache.has(id)) {
 			return;
 		}
 
@@ -35,38 +43,41 @@ export class Controllers {
 			return;
 		}
 
-		this.cache.set(gamepad.id, {gamepadId: gamepad.id, el, cacheAxes: [], cacheButtons: []});
+		this.cache.set(id, {gamepadId: id, el, cacheAxes: [], cacheButtons: []});
 		document.querySelector('.controllers')?.appendChild(el);
 		requestAnimationFrame(this.update);
 	}
 
 	remove(gamepad: Gamepad) {
-		if (!this.cache.has(gamepad.id)) {
+		const id = gamepad.id + gamepad.index;
+		if (!this.cache.has(id)) {
 			return;
 		}
-		const state = this.cache.get(gamepad.id);
+		const state = this.cache.get(id);
 		if (state) {
 			state.el.remove();
 		}
-		this.cache.delete(gamepad.id);
+		this.cache.delete(id);
 	}
 
 	private createGamepad(gamepad: Gamepad) {
-		const controllerType = detectControllerType(gamepad.id);
-		for (const [Custom, {type}] of this.types) {
+		const controllerType = getControllerTypeByStyle(gamepad)
+			|| detectControllerType(gamepad.id);
+		for (const {Class, type} of this.types) {
 			if (type === controllerType) {
-				return new Custom();
+				return new Class(gamepad.index, type);
 			}
 		}
 	}
 
 	private update = () => {
 		for (const gamepad of navigator.getGamepads()) {
-			if (!gamepad || !this.cache.has(gamepad.id)) {
+			if (!gamepad) {
 				continue;
 			}
-			const {id, buttons, axes} = gamepad;
-			const cacheItem = this.cache.get(id);
+			const {id, index, buttons, axes} = gamepad;
+			const gamepadId = id + index;
+			const cacheItem = this.cache.get(gamepadId);
 			if (!cacheItem || !cacheItem.el.isConnected) {
 				continue;
 			}

@@ -24,9 +24,11 @@ export const esbuildOptions = {
 						return;
 					}
 					const script = outputFiles.find((file) => file.path.endsWith('.js'))?.text;
+					const styles = outputFiles.find((file) => file.path.endsWith('.css'))?.text;
 					const file = (await readFile('./src/index.html', 'utf8'))
+						.replace('<style></style>', `<style>${styles}</style>`)
 						.replace('<script></script>', `<script>${script?.toString()}</script>`)
-					await writeFile('./index.html', file);
+					await writeFile('./docs/index.html', file);
 				});
 			},
 		},
@@ -49,7 +51,7 @@ export const esbuildOptions = {
 		// main sass
 		sassPlugin({
 			filter: /\.scss$/,
-			type: 'style',
+			type: 'css',
 			transform: (source) => minify(source).css,
 		}),
 	],

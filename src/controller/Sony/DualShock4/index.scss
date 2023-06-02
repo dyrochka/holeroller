@@ -2,22 +2,4 @@
 
 :host {
 	@include SvgGamepad;
-
-	> svg {
-		.lxy, .rxy {
-			> .sclera {
-				stroke-width: 0;
-				fill: #fff;
-			}
-			> .pupil {
-				stroke-width: 0;
-				fill: var(--color-primary-800);
-			}
-
-			> .iris {
-				stroke-width: 0;
-				fill: #000;
-			}
-		}
-	}
 }

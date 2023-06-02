@@ -4,13 +4,12 @@ import {ControllerType} from 'controller/detectControllerType';
 import {SonyButtons} from 'controller/Sony/SonyButtons';
 import {createTemplateElement} from 'utils/createTemplateElement';
 import svgTemplate from 'export/DualShock4.svg';
-// import svgTemplate from 'controller/Sony/DualShock4/index.svg';
 import svgStyle from 'controller/Sony/DualShock4/index.scss';
 
 @define({type: ControllerType.SonyDualShock4})
 class DualShock4 extends SvgController {
-	getSvgStyle = () => createTemplateElement(`<style>${svgStyle}</style>`);
-	getSvgTemplate = () => createTemplateElement(svgTemplate);
+	getStyle = () => createTemplateElement(`<style>${svgStyle}</style>`);
+	getTemplate = () => createTemplateElement(svgTemplate);
 	getButtonIds = () => Object.values(SonyButtons).filter((value) => typeof value === 'string') as string[];
 
 	// noinspection DuplicatedCode

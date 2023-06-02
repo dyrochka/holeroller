@@ -1,16 +1,13 @@
 /**
- * EN: Settings – used with preprocessors and contain font, colors definitions, etc.
+ * Settings – used with preprocessors and contain font, colors definitions, etc.
  * RU: Настройки – препроцессорные переменные и методы (без CSS вывода)
  */
 :root {
 	--color-primary-900: #00B9D2;
 	--color-primary-800: #50959Ecc;
 	--color-primary-700: #50959Eb2;
-	//--color-primary-900: red;
-	//--color-primary-800: red;
-	//--color-primary-700: red;
 
-	--color-black-900: #000000B2;
+	//--color-black-900: #000000B2;
 	--color-black-800: #00000080;
 	--color-black-700: #0000009E;
 
@@ -21,17 +18,31 @@
 	--color-bright-900: #ffffff40;
 
 	--border-main: 1;
-	--border-buttons: 3;
+	--border-button: 3;
+}
+
+//body {
+//	--color-primary-base: #880071;
+//	--color-black-base: #000;
+//}
+[data-type="SonyDualSense"] {
+	--color-primary-800: #880071;
+}
+[data-index="0"] {
+	--type: "SonyDualShock4";
+}
+[data-index="1"] {
+	--type: "SonyDualSeance";
 }
 
 /**
- * EN: Tools – globally used mixins and functions. It’s important not to output any CSS in the first 2 layers.
+ * Tools – globally used mixins and functions. It’s important not to output any CSS in the first 2 layers.
  * RU: Инструменты – миксины и функции (без CSS вывода)
  */
 // ...
 
 /**
- * EN: Generic – reset and/or normalize styles, box-sizing definition, etc.
+ * Generic – reset and/or normalize styles, box-sizing definition, etc.
  * RU: Generic – сброс и/или нормализация стилей
  */
 [hidden] {
@@ -39,7 +50,7 @@
 }
 
 /**
- * EN: Elements – styling for bare HTML elements (like H1, A, etc.).
+ * Elements – styling for bare HTML elements (like H1, A, etc.).
  * RU: Элементы - единственные селекторы элемента HTML без классов
  */
 body {

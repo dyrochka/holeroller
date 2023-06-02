@@ -15,14 +15,14 @@
 		}
 
 		.pressed {
-			fill: var(--color-primary-800);
-			stroke: var(--color-primary-800);
+			fill: var(--color-primary-900);
+			stroke: var(--color-primary-900);
 		}
 
 		> .buttons {
 			fill: var(--color-black-700);
 			stroke: var(--color-primary-800);
-			stroke-width: var(--border-buttons);
+			stroke-width: var(--border-button);
 			stroke-miterlimit: 10;
 			stroke-linecap: round;
 

@@ -3,14 +3,13 @@ import {SvgController} from 'controller/SvgController';
 import {ControllerType} from 'controller/detectControllerType';
 import {SonyButtons} from 'controller/Sony/SonyButtons';
 import {createTemplateElement} from 'utils/createTemplateElement';
-// import svgTemplate from 'controller/Sony/DualSense/index.svg';
 import svgTemplate from 'export/DualSense.svg';
 import svgStyle from 'controller/Sony/DualSense/index.scss';
 
 @define({type: ControllerType.SonyDualSense})
 class DualSense extends SvgController {
-	getSvgStyle = () => createTemplateElement(`<style>${svgStyle}</style>`);
-	getSvgTemplate = () => createTemplateElement(svgTemplate);
+	getStyle = () => createTemplateElement(`<style>${svgStyle}</style>`);
+	getTemplate = () => createTemplateElement(svgTemplate);
 	getButtonIds = () => Object.values(SonyButtons).filter((value) => typeof value === 'string') as string[];
 
 	// noinspection DuplicatedCode

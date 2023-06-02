@@ -6,20 +6,29 @@ export abstract class SvgController extends CustomController {
 	buttons: (SVGElement | null)[] = [];
 	axesPositions: number[] = [];
 
-	abstract getSvgStyle(): HTMLTemplateElement;
-	abstract getSvgTemplate(): HTMLTemplateElement;
+	abstract getStyle(): HTMLTemplateElement;
+	abstract getTemplate(): HTMLTemplateElement;
 	abstract getButtonIds(): string[];
 
 	pupil: SVGPathElement | null;
 	iris: SVGPathElement | null;
 
-
 	connectedCallback() {
-		this.attachShadow({mode: 'open'}).append(this.getSvgStyle().content.cloneNode(true));
+		this.attachShadow({mode: 'open'});
 		if (!this.shadowRoot) {
 			return;
 		}
-		this.shadowRoot.append(this.getSvgTemplate().content.cloneNode(true));
+		// add computed styles
+		// const stylesByParent = getComputedStyle(this);
+		// add style
+		this.shadowRoot.append(this.getStyle().content.cloneNode(true));
+		// add template
+		this.shadowRoot.append(this.getTemplate().content.cloneNode(true));
+		const styles = getComputedStyle(this);
+		// styles.setProperty('--color-primary-900', '#ffff');
+		// console.warn(this.parentElement.children)
+		// console.warn('--color-primary-800', styles.getPropertyValue('--color-primary-800'))
+		// this.shadowRoot.ge
 
 		for (const value of this.getButtonIds()) { // Object.values(SonyPS5Buttons)) {
 			const el = this.shadowRoot.querySelector('.' + value);
@@ -35,11 +44,8 @@ export abstract class SvgController extends CustomController {
 			circle ? circle.cx.baseVal.value : 0,
 			circle ? circle.cy.baseVal.value : 0
 		));
-		// console.warn('axesPositionBySVG', axesPositionBySVG, this.shadowRoot.querySelector<SVGCircleElement>('.lxy > circle:first-child'));
-		// console.warn(this.shadowRoot.querySelector('.lxy > circle'));
 
 		// extract axes coordinate from CSS
-		const styles = getComputedStyle(this);
 		const axesPositionByCSS = axesStyleProperties.map((property) => Number(styles.getPropertyValue(property)));
 
 		axesStyleProperties.forEach((customProperty, id) => {
@@ -47,10 +53,6 @@ export abstract class SvgController extends CustomController {
 			this.axesPositions[id] = value;
 			this.style.setProperty(customProperty, String(value));
 		});
-
-		// this.pupil = this.shadowRoot.querySelector('.pupil');
-		// this.iris = this.shadowRoot.querySelector('.iris');
-		// console.warn(this.pupil, this.iris);
 	}
 
 	updateButton(id: number, value: GamepadButton): void | Promise<void> {
@@ -68,10 +70,7 @@ export abstract class SvgController extends CustomController {
 
 	updateAllAxes(values: number[]) {
 		const [lx, ly, rx, ry] = values.map((value) => Math.abs(value));
-		// this.style.setProperty('--left-size', 1.2.toString());
 		this.style.setProperty('--left-size', Math.max(Math.min((lx + ly) * 12, 12), 6).toString());
 		this.style.setProperty('--right-size', Math.max(Math.min((rx + ry) * 12, 12), 6).toString());
-		// this.style.setProperty('--left-size', (Math.max(Math.min(lx + ly, 0.1), 1.4)).toString());
-		// this.style.setProperty('--right-size', (Math.random() * 2).toString());
 	}
 }
